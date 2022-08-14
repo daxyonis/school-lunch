@@ -1,3 +1,14 @@
+<script>
+  import { Navigate } from 'svelte-router-spa'
+
+  let emailAddress
+  let schoolName
+
+  function register() {
+    alert(`Email is ${emailAddress} and School Name is ${schoolName}`)
+  }
+</script>
+
 <div class="notification">
   <div class="columns">
     <div class="column">
@@ -18,6 +29,7 @@
           <label class="label">Adresse courriel</label>
           <div class="control">
             <input
+              bind:value="{emailAddress}"
               type="text"
               placeholder="Entrez votre adresse courriel"
               class="input" />
@@ -27,6 +39,7 @@
           <label class="label">Nom de l'école</label>
           <div class="control">
             <input
+              bind:value="{schoolName}"
               type="text"
               placeholder="Entrez le nom de l'école"
               class="input" />
@@ -34,7 +47,7 @@
         </div>
         <div class="field is-grouped">
           <div class="control">
-            <button class="button is-link is-outlined">Go</button>
+            <button on:click="{register}" class="button is-link is-outlined">Go</button>
           </div>
         </div>
       </div>
@@ -45,7 +58,9 @@
   <div class="content" style="line-height: 30px;">
     <center>
       <span>Déjà enregistré ?</span>
-      <button class="button is-small is-text">Connectez-vous</button>
+      <Navigate to="/admin/manage-menus">
+        <button class="button is-small is-text">Connectez-vous</button>
+      </Navigate>
     </center>
   </div>
 </div>
