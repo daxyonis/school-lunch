@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var lunchWeekRouter = require('./routes/lunch-week');
 
 var app = express();
 
@@ -14,7 +15,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+var router = express.Router();
+
+router.use('/', indexRouter);
+router.use('/users', usersRouter);
+router.use('/lunch-week', lunchWeekRouter);
+app.use('/api', router);
 
 module.exports = app;
