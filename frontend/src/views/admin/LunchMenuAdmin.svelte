@@ -13,7 +13,7 @@
 
   onMount(async () => {
     try {      
-      let response = await axios.get('http://localhost:3000/api/lunch-week')
+      let response = await axios.get(`${process.env.API_ROOT}/api/lunch-week`)
       lunchWeekList = response.data      
       loading = false
     } catch (e) {
