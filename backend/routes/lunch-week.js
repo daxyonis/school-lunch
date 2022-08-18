@@ -19,7 +19,8 @@ const lunchWeekList = [
   },
 ];
 
-router.get('/', function (req, res) {
+router.get('/', async function (req, res) {
+  await new Promise((f) => setTimeout(f, 2000)); // 2 second timeout
   res.send(lunchWeekList);
 });
 

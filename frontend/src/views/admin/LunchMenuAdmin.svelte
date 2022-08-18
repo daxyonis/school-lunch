@@ -3,18 +3,22 @@
   import { onMount } from 'svelte'
   import { navigateTo } from 'svelte-router-spa' 
   import axios from 'axios'
+  import Icon from 'svelte-awesome'
+  import { refresh } from 'svelte-awesome/icons'
 
-  export let currentRoute;
+  export let currentRoute
 
   let lunchWeekList = []
+  let loading = true
 
   onMount(async () => {
-    try {
+    try {      
       let response = await axios.get('http://localhost:3000/api/lunch-week')
-      lunchWeekList = response.data
+      lunchWeekList = response.data      
+      loading = false
     } catch (e) {
       console.error('Error fetching data')
-    }
+    }    
   })
 
   const openLunchWeekDetails = lunchWeek => {
@@ -37,6 +41,11 @@
       </li>
     </ul>
   </nav>
+  {#if loading}
+  <div class="section">
+    <Icon spin data="{refresh}" scale="3" />
+  </div>
+  {:else}
   <table class="table">
     <thead>
       <tr>
@@ -51,4 +60,5 @@
     </tr>
     {/each}
   </table>
+  {/if}
 </div>

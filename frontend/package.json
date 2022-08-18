@@ -21,6 +21,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "sirv-cli": "^1.0.0",
+    "svelte-awesome": "^3.0.0",
     "svelte-router-spa": "^6.0.2"
   }
 }
