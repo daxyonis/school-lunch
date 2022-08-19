@@ -1,38 +1,47 @@
 var express = require('express');
 var router = express.Router();
+const knex = require('../database/client');
 
-const lunchWeekList = [
-  {
-    lunchWeekId: 1,
-    weekOf: '2020-10-05',
-    isPublished: true,
-  },
-  {
-    lunchWeekId: 2,
-    weekOf: '2020-10-12',
-    isPublished: true,
-  },
-  {
-    lunchWeekId: 3,
-    weekOf: '2020-10-19',
-    isPublished: false,
-  },
-];
+// Create a helper function to select all the rows from the
+// lunch_week table
+const getLunchWeekList = () => {
+  return knex.select().from('lunch_week').orderBy('week_of');
+};
+
+const getLunchWeekById = (id) => {
+  return knex.select().from('lunch_week').where('lunch_week_id', id).first();
+};
 
 router.get('/', async function (req, res) {
-  await new Promise((f) => setTimeout(f, 2000)); // 2 second timeout
-  res.send(lunchWeekList);
+  try {
+    const lunchWeekList = await getLunchWeekList();
+    res.send(lunchWeekList);
+  } catch (e) {
+    res.status(500).send({
+      message: 'Error getting lunch week list',
+      error: e.toString(),
+    });
+  }
 });
 
-router.get('/:lunchWeekId', function (req, res) {
-  // parameters are strings, so in some cases you may need to convert them to a different type
-  const id = parseInt(req.params.lunchWeekId);
-  // use the JS Array.prototype.find method to get the first matching entity from the list
-  const lunchWeek = lunchWeekList.find((x) => x.lunchWeekId === id);
-  if (lunchWeek) {
-    res.send(lunchWeek);
-  } else {
-    res.status(404).send();
+router.get('/:lunchWeekId', async function (req, res) {
+  try {
+    const id = parseInt(req.params.lunchWeekId);
+    const lunchWeek = await getLunchWeekById(id);
+    if (lunchWeek) {
+      res.send(lunchWeek);
+    } else {
+      const message = `Lunch Week Id ${req.params.lunchWeekId} not found`;
+      res.status(404).send({
+        message: message,
+      });
+    }
+  } catch (e) {
+    const message = `Error getting Lunch Week Id ${req.params.lunchWeekId}`;
+    res.status(500).send({
+      message: message,
+      error: e.toString(),
+    });
   }
 });
 
