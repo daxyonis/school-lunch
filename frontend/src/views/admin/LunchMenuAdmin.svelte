@@ -124,7 +124,7 @@ const createLunchWeek = async () => {
     {#each lunchWeekList as lunchWeek}
     <tr>
       <td on:click="{openLunchWeekDetails(lunchWeek)}" class="has-text-link clickable">{lunchWeek.weekOf}</td>
-      <td>{lunchWeek.isPublished}</td>
+      <td>{lunchWeek.isPublished ? 'Oui' : 'Non'}</td>
       <td on:click="{openDeleteModal(lunchWeek)}" class="has-text-grey-light clickable">
         <Icon style="margin-top: 4px;" data="{times}" />
       </td>

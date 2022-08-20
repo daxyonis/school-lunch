@@ -9,7 +9,7 @@
   }
 </script>
 
-<div class="notification">
+<div class="notification is-info is-light">
   <div class="columns">
     <div class="column">
       <div class="content">

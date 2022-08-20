@@ -33,6 +33,10 @@ const createLunchDay = (lunchDay) => {
 const updateLunchDay = (lunchDayId, lunchDay) => {
   return knex('lunch_day').where('lunch_day_id', lunchDayId).update(lunchDay);
 };
+
+const getLunchDayList = (lunchWeekId) => {
+  return knex.select().from('lunch_day').where('lunch_week_id', lunchWeekId);
+};
 //*********************************
 
 // Get all lunch weeks
@@ -54,6 +58,8 @@ router.get('/:lunchWeekId', async function (req, res) {
     const id = parseInt(req.params.lunchWeekId);
     const lunchWeek = await getLunchWeekById(id);
     if (lunchWeek) {
+      let lunchDays = await getLunchDayList(id);
+      lunchWeek.lunchDays = lunchDays;
       res.send(lunchWeek);
     } else {
       const message = `Lunch Week Id ${req.params.lunchWeekId} not found`;
