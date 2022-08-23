@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const knex = require('../database/client');
+let knex;
 
 //************************
 // Helper functions
@@ -41,6 +41,7 @@ const getLunchDayList = (lunchWeekId) => {
 
 // Get all lunch weeks
 router.get('/', async function (req, res) {
+  knex = req.knex;
   try {
     const lunchWeekList = await getLunchWeekList();
     res.send(lunchWeekList);
@@ -54,6 +55,7 @@ router.get('/', async function (req, res) {
 
 // Get one lunch week
 router.get('/:lunchWeekId', async function (req, res) {
+  knex = req.knex;
   try {
     const id = parseInt(req.params.lunchWeekId);
     const lunchWeek = await getLunchWeekById(id);
@@ -78,6 +80,7 @@ router.get('/:lunchWeekId', async function (req, res) {
 
 // create lunch week
 router.post('/', async function (req, res) {
+  knex = req.knex;
   const lunchWeek = req.body;
   try {
     const insertResponse = await createLunchWeek(lunchWeek);
@@ -96,6 +99,7 @@ router.post('/', async function (req, res) {
 
 // Update lunch week
 router.put('/:lunchWeekId', async function (req, res) {
+  knex = req.knex;
   try {
     const id = parseInt(req.params.lunchWeekId);
     const lunchWeek = req.body;
@@ -120,6 +124,7 @@ router.put('/:lunchWeekId', async function (req, res) {
 
 // Delete lunch week
 router.delete('/:lunchWeekId', async function (req, res) {
+  knex = req.knex;
   try {
     const id = parseInt(req.params.lunchWeekId);
     await deleteLunchWeek(id);
@@ -132,6 +137,7 @@ router.delete('/:lunchWeekId', async function (req, res) {
 
 // Create lunch day
 router.post('/:lunchWeekId/lunch-day', async function (req, res) {
+  knex = req.knex;
   const lunchDay = req.body;
   try {
     const insertResponse = await createLunchDay(lunchDay);
@@ -148,6 +154,7 @@ router.post('/:lunchWeekId/lunch-day', async function (req, res) {
 
 // Update lunch day
 router.put('/:lunchWeekId/lunch-day/:lunchDayId', async function (req, res) {
+  knex = req.knex;
   try {
     const lunchDayId = parseInt(req.params.lunchDayId);
     const lunchDay = req.body;
