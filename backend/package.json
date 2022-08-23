@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "nodemon": "set DEBUG=backend:* && npx eslint ./ && nodemon ./bin/www",
+    "nodemon": "node migrate && set DEBUG=backend:* && npx eslint ./ && nodemon ./bin/www",
     "start": "npx eslint ./ && node ./bin/www",
     "lint": "npx eslint ./"
   },
