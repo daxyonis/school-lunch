@@ -1,8 +1,10 @@
+require('dotenv').config(); // APPLY THE .env FILE TO SET SECRETS AS ENV VARS
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+const authenticateJwt = require('./authenticate-jwt');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -23,7 +25,7 @@ var router = express.Router();
 
 router.use('/', indexRouter);
 router.use('/users', usersRouter);
-router.use('/lunch-week', lunchWeekRouter);
+router.use('/lunch-week', authenticateJwt, lunchWeekRouter);
 app.use('/api', router);
 
 module.exports = app;
