@@ -84,6 +84,11 @@
     lunchWeek.isPublished = !lunchWeek.isPublished
     publishing = false
   }
+
+  const getPublicLink = () => {
+    const schoolPath = $user.schoolName.toLowerCase().replace(/ /g, '-')
+    return `${window.location.origin}/lunch-menu/${schoolPath}/${lunchWeek.weekOf}`
+  }
 </script>
 
 <div>
@@ -123,15 +128,36 @@
         {/each}
       </div>
     </section>
-    <section class="mt-2 has-text-right">
-      <div class="buttons is-right">
+    <section class="mt-2">
+      <div class="buttons">
         <button class="{'button is-link is-small' + (saving ? ' is-loading' : '')}" on:click="{() => save()}">
-          Save
+          Sauvegarder
         </button>
         <button class="{'button is-text is-small' + (publishing ? ' is-loading' : '')}" on:click="{() => togglePublish()}">
-          {lunchWeek.isPublished ? 'Unpublish' : 'Publish'}
+          {lunchWeek.isPublished ? 'Dépublier' : 'Publier'}
         </button>
+        <div class="dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <button class="button is-text is-small">Lien</button>
+          </div>
+          <div class="dropdown-menu" id="link-dropdown-menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <p>Lien public du menu:</p>
+                <p class="mt-2">
+                  <a href="{getPublicLink()}" target="_blank">{getPublicLink()}</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   {/if}
 </div>
+
+<style>
+  #link-dropdown-menu {
+    min-width: 32rem;
+  }
+</style>

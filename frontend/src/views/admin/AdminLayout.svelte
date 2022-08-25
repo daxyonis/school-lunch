@@ -54,7 +54,7 @@
 
 <div>  
   {#if initialized}
-    <button class="button is-light is-small" style="float: right;" on:click="{() => logout()}">Logout</button>
+    <button class="button is-light is-small" style="float: right;" on:click="{() => logout()}">Déconnexion</button>
     <Route {currentRoute} />
   {/if}
 </div>
