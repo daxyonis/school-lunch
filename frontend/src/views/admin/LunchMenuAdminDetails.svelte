@@ -107,19 +107,9 @@
     <div class="section">
       <Icon spin data="{refresh}" scale="3" />
     </div>
-  {:else}
-    <section>{JSON.stringify(lunchWeek)}</section>
-    <section>
-      <div class="buttons">
-        <button class="{'button is-link is-small' + (saving ? ' is-loading' : '')}" on:click="{() => save()}">
-          Save
-        </button>
-        <button class="{'button is-text is-small' + (publishing ? ' is-loading' : '')}" on:click="{() => togglePublish()}">
-          {lunchWeek.isPublished ? 'Unpublish' : 'Publish'}
-        </button>
-      </div>
-    </section>
-    <section class="mt-2">
+  {:else}        
+    <div class='is-size-4'>Menus de la semaine</div>
+    <section class="mt-2">      
       <div class="columns">
         {#each lunchWeek.lunchDays as lunchDay}
           <div class="column">
@@ -131,6 +121,16 @@
             </div>
           </div>
         {/each}
+      </div>
+    </section>
+    <section class="mt-2 has-text-right">
+      <div class="buttons is-right">
+        <button class="{'button is-link is-small' + (saving ? ' is-loading' : '')}" on:click="{() => save()}">
+          Save
+        </button>
+        <button class="{'button is-text is-small' + (publishing ? ' is-loading' : '')}" on:click="{() => togglePublish()}">
+          {lunchWeek.isPublished ? 'Unpublish' : 'Publish'}
+        </button>
       </div>
     </section>
   {/if}
