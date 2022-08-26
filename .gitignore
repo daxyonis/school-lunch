@@ -1,2 +1,4 @@
 backend/knexfile.js
 backend/.env
+backend/public
+backend/public/index.html

@@ -2,7 +2,8 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "build": "npx eslint ./src && rollup -c",
+    "build": "npx eslint ./src && rollup -c && rm -rf ../backend/public && cp -a ./public/. ../backend/public",
+    "build-win": "npx eslint ./src && rollup -c && @powershell -NoProfile -ExecutionPolicy Unrestricted -Command ./copy.ps1",
     "dev": "npx eslint ./src && rollup -c -w",
     "start": "sirv public -s"
   },

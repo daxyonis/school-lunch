@@ -7,7 +7,6 @@ const cors = require('cors');
 const authenticateJwt = require('./authenticate-jwt');
 const { passKnexSecured } = require('./database/dynamic-knex');
 
-const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const lunchWeekRouter = require('./routes/lunch-week');
 const lunchWeekPublicRouter = require('./routes/lunch-week-public');
@@ -25,10 +24,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const router = express.Router();
 
-router.use('/', indexRouter);
 router.use('/users', usersRouter);
 router.use('/lunch-week-public', lunchWeekPublicRouter);
 router.use('/lunch-week', [authenticateJwt, passKnexSecured], lunchWeekRouter);
 app.use('/api', router);
+
+// fallback route to index.html
+app.use('/*', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
+});
 
 module.exports = app;
