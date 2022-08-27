@@ -1,0 +1,1 @@
+docker run --name school-lunch -p 3000:3000 -e PG_HOST=host.docker.internal  daxyonis/school-lunch

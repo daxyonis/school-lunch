@@ -1,0 +1,1 @@
+docker build . -t daxyonis/school-lunch
