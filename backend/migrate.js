@@ -3,22 +3,23 @@ require('dotenv').config();
 
 const getConfig = (databaseName) => {
   return {
-    client: 'postgresql',
+    client: process.env.DB_CLIENT,
     connection: {
       database: databaseName,
-      host: process.env.PG_HOST,
-      user: process.env.PG_USER,
-      password: process.env.PG_PASSWORD,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
     },
   };
 };
 
 const migrateDatabases = async () => {
-  const defaultKnex = knex(getConfig('postgres'));
+  const defaultKnex = knex(getConfig('information_schema'));
   const catalogDb = await defaultKnex
     .select()
-    .from('pg_database')
-    .where({ datname: 'catalog' })
+    .from('schemata')
+    .where({ schema_name: 'catalog' })
     .first();
 
   if (!catalogDb) {
@@ -36,8 +37,8 @@ const migrateDatabases = async () => {
     const school = schools[i];
     const db = await catalogKnex
       .select()
-      .from('pg_database')
-      .where({ datname: school.school_database })
+      .from('information_schema.schemata')
+      .where({ schema_name: school.school_database })
       .first();
 
     if (!db) {

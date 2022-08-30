@@ -5,7 +5,7 @@
 exports.up = function (knex) {
   // creates the lunch_week table
   return knex.schema.createTable('lunch_week', function (table) {
-    table.increments('lunch_week_id'); // auto-numbering primary key column
+    table.increments('lunch_week_id').primary(); // auto-numbering primary key column
     table.date('week_of').notNullable();
     table.boolean('is_published').notNullable().defaultTo(false);
   });

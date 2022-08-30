@@ -39,6 +39,8 @@
     try {
       const response = await axios.get(`${process.env.API_ROOT}/api/lunch-week/${routeLunchWeekId}`)
       lunchWeek = response.data // set the state
+      console.log(`onMount lunchWeek = `)
+      console.log(lunchWeek)
       seedLunchDays()
       loading = false
     } catch (e) {
@@ -69,7 +71,7 @@
   const togglePublish = async () => {
     publishing = true
     // Copy the lunchweek object
-    let lunchWeekPayload = JSON.parse(JSON.stringify(lunchWeek))    
+    let lunchWeekPayload = Object.assign({},lunchWeek);
 
     // toggle the lunchWeek.isPublished property
     lunchWeekPayload.isPublished = !lunchWeekPayload.isPublished
@@ -87,7 +89,7 @@
 
   const getPublicLink = () => {
     const schoolPath = $user.schoolName.toLowerCase().replace(/ /g, '-')
-    return `${window.location.origin}/lunch-menu/${schoolPath}/${lunchWeek.weekOf}`
+    return `${window.location.origin}/lunch-menu/${schoolPath}/${format(parseISO(lunchWeek.weekOf), 'yyyy-MM-dd')}`
   }
 </script>
 

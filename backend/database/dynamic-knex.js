@@ -1,8 +1,10 @@
 const knex = require('knex');
 const knexStringcase = require('knex-stringcase');
+const parse = require('date-fns/parse');
+const format = require('date-fns/format');
 
-const types = require('pg').types;
-types.setTypeParser(1082, (val) => val);
+// const types = require('pg').types;
+// types.setTypeParser(1082, (val) => val);
 
 // create a cache map
 const knexCache = new Map();
@@ -15,12 +17,23 @@ const getKnex = (schoolDatabase) => {
   if (!db) {
     // create a config with the school database and the env vars
     const config = {
-      client: 'postgresql',
+      client: process.env.DB_CLIENT,
       connection: {
         database: schoolDatabase,
-        host: process.env.PG_HOST,
-        user: process.env.PG_USER,
-        password: process.env.PG_PASSWORD,
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        typeCast: function (field, next) {
+          if (field.type === 'DATE') {
+            return format(
+              parse(field.string(), 'yyyy-MM-dd', new Date()),
+              'yyyy-MM-dd'
+            );
+          } else {
+            return next();
+          }
+        },
       },
     };
 

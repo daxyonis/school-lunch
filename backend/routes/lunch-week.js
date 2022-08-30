@@ -15,7 +15,7 @@ const getLunchWeekById = (id) => {
 const createLunchWeek = (lunchWeek) => {
   // for Postgres, we need to specifiy what columns to return back
   // from the insert statement with a call to `.returning()`
-  return knex('lunch_week').insert(lunchWeek).returning('lunch_week_id');
+  return knex('lunch_week').insert(lunchWeek);
 };
 
 const updateLunchWeek = (id, lunchWeek) => {
@@ -27,7 +27,7 @@ const deleteLunchWeek = (lunchWeekId) => {
 };
 
 const createLunchDay = (lunchDay) => {
-  return knex('lunch_day').insert(lunchDay).returning('lunch_day_id');
+  return knex('lunch_day').insert(lunchDay);
 };
 
 const updateLunchDay = (lunchDayId, lunchDay) => {

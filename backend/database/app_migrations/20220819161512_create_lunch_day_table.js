@@ -4,8 +4,8 @@
  */
 exports.up = function (knex) {
   return knex.schema.createTable('lunch_day', function (table) {
-    table.increments('lunch_day_id'); // primary key
-    table.integer('lunch_week_id').notNullable(); // create the foreign key (FK) column first
+    table.increments('lunch_day_id').primary(); // primary key
+    table.integer('lunch_week_id').unsigned().notNullable(); // create the foreign key (FK) column first
     table.date('day').notNullable();
     table.string('menu_details', 1000);
     table

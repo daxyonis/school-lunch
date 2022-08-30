@@ -60,12 +60,13 @@ router.post('/', async function (req, res) {
 
 const createDatabase = async (databaseName, schoolName) => {
   const knexConfig = {
-    client: 'postgresql',
+    client: DB_CLIENT,
     connection: {
       database: 'catalog',
-      host: process.env.PG_HOST,
-      user: process.env.PG_USER,
-      password: process.env.PG_PASSWORD,
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
     },
   };
 
