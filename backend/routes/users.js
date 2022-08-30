@@ -60,7 +60,7 @@ router.post('/', async function (req, res) {
 
 const createDatabase = async (databaseName, schoolName) => {
   const knexConfig = {
-    client: DB_CLIENT,
+    client: process.env.DB_CLIENT,
     connection: {
       database: 'catalog',
       host: process.env.DB_HOST,
