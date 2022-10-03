@@ -17,4 +17,4 @@ onMount(async () => {
   })
 </script>
 
-<h1>Redirecting...Please wait</h1>
+<h1>En traitement... veuillez patienter</h1>
